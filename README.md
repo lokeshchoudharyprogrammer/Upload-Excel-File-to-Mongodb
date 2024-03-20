@@ -1,70 +1,150 @@
-# Getting Started with Create React App
+Sure, here are two separate Markdown (.md) files for the backend and frontend parts of the application:
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### Backend API (.md)
 
-## Available Scripts
+```markdown
+# Backend API
 
-In the project directory, you can run:
+This document describes the backend API for the file upload functionality.
 
-### `npm start`
+## Technologies Used
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Node.js
+- Express.js
+- Multer (for handling file uploads)
+- CORS (for Cross-Origin Resource Sharing)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## API Endpoints
 
-### `npm test`
+### POST /upload
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **Description**: Endpoint for uploading a file.
+- **Request Body**: Requires a `file` field in a `multipart/form-data` format.
+- **Response**:
+  - `200 OK` with a JSON object:
+    ```json
+    {
+      "message": "File uploaded successfully."
+    }
+    ```
+  - `400 Bad Request` if the file upload fails:
+    ```json
+    {
+      "error": "Failed to upload file."
+    }
+    ```
 
-### `npm run build`
+## Usage
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. Clone the repository or set up a new Node.js project.
+2. Install dependencies:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+   ```bash
+   npm install express multer cors
+   ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+3. Create the backend server:
 
-### `npm run eject`
+   ```javascript
+   // server.js
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+   const express = require('express');
+   const cors = require('cors');
+   const multer = require('multer');
+   const app = express();
+   const port = 5000;
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+   // Configure CORS
+   app.use(cors());
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+   // Multer configuration for file upload
+   const upload = multer({ dest: 'uploads/' });
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+   // POST /upload endpoint for file upload
+   app.post('/upload', upload.single('file'), (req, res) => {
+     if (!req.file) {
+       return res.status(400).json({ error: 'No file uploaded.' });
+     }
 
-## Learn More
+     // Handle the file upload logic (save to storage, etc.)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+     res.status(200).json({ message: 'File uploaded successfully.' });
+   });
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+   app.listen(port, () => {
+     console.log(`Server is running on port ${port}`);
+   });
+   ```
 
-### Code Splitting
+4. Start the backend server:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+   ```bash
+   node server.js
+   ```
 
-### Analyzing the Bundle Size
+5. Your backend API is now running and ready to accept file upload requests.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-### Making a Progressive Web App
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### Frontend Component (.md)
 
-### Advanced Configuration
+# Frontend File Upload Component
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+This document describes the frontend file upload component.
 
-### Deployment
+## Technologies Used
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- React.js
+- Chakra UI (for styling)
 
-### `npm run build` fails to minify
+## Component Overview
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+The frontend component allows users to upload an image file using a custom-styled file upload interface. Upon selecting a file and clicking the "Upload" button, it sends a POST request to the backend API for file upload.
+
+## Usage
+
+1. Clone the repository or set up a new React.js project.
+2. Install dependencies:
+
+   npm install @chakra-ui/react framer-motion react-icons axios
+
+
+3. Create the frontend component:
+
+   ```javascript
+   import React, { useState } from 'react';
+   import { Box, Button, Flex, Input, Text, VStack, Alert, AlertIcon } from '@chakra-ui/react';
+   import { AiOutlineCloudUpload } from 'react-icons/ai';
+   import axios from 'axios';
+
+   function CustomFileUpload() {
+     // Component code here (use the provided code for the frontend component)
+   }
+
+   export default CustomFileUpload;
+   ```
+
+4. Customize the component as needed for your project.
+5. Integrate the component into your React application.
+6. Ensure the backend API is running to handle file uploads.
+
+## Component Code
+
+The component code is provided in the previous messages. It includes:
+
+- CustomFileUpload component with Chakra UI styling.
+- State management for file selection and upload message.
+- Functionality to handle file uploads and display upload messages.
+
+## Component Usage
+
+1. Add the `CustomFileUpload` component to any of your React components where you want to include the file upload functionality.
+2. Customize the appearance and behavior of the component using Chakra UI's styling and props.
+3. When a user clicks on the "Upload" button, the component will send a POST request to the backend API endpoint for file upload.
+4. Upon successful upload, it will display a success message. Otherwise, it will display an error message.
+
+Feel free to modify and integrate this component into your React project.
+
+```
+
+These files provide an overview of the backend API setup and the frontend component usage for the file upload functionality. You can further customize the components and server logic based on your specific requirements.
